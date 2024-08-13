@@ -3,6 +3,7 @@ import http from "http";
 import { Server as SocketIOServer } from "socket.io";
 import router from "./router";
 import * as dotenv from "dotenv";
+import axios from "axios";
 import cors from "cors";
 import { getUser, addUser, removeUser, getUsersInRoom } from "./user";
 
@@ -131,6 +132,19 @@ io.on("connection", (socket) => {
     console.log("user disconnected");
   });
 });
+
+// Health check function
+function checkServerHealth() {
+  axios
+    .get(`http://localhost:${PORT}/health`)
+    .then((response) => {
+      console.log("Server health check:", response.data);
+    })
+    .catch((error) => {
+      console.error("Server health check failed:", error.message);
+    });
+}
+setInterval(checkServerHealth, 50000);
 
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
