@@ -104,13 +104,26 @@
         document.getElementById('messages').appendChild(messageElement);
       });
 
-      document.getElementById('sendBtn').onclick = () => {
+      const sendMessage = () => {
         const message = document.getElementById('messageInput').value;
 
-        socket.emit('sendMessage', message, () => {
-          document.getElementById('messageInput').value = '';
-        });
+        if (message.trim() !== '') {
+          socket.emit('sendMessage', message, () => {
+            document.getElementById('messageInput').value = '';
+          });
+        }
       };
+
+      // Send message on Enter key press
+      document
+        .getElementById('messageInput')
+        .addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') {
+            sendMessage();
+          }
+        });
+
+      document.getElementById('sendBtn').onclick = sendMessage;
 
       // Handle reactions
       socket.on('reaction', ({ messageId, user, reaction }) => {
