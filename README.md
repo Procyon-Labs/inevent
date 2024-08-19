@@ -164,3 +164,8 @@ The `to` method sends a message to all clients in a specific room.
 └── README.md            # Project documentation
 
 ```
+
+**Additional Notes**
+
+- Refer to the `package.json` file for any additional scripts specific to this project.
+- Configuration files (e.g., `.env`) might be required for the project to run properly. Take a look at the `env.sample` file for a guide. Make sure you have them set up according to your environment.
