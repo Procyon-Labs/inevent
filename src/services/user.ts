@@ -7,8 +7,8 @@ interface User {
 const users: User[] = [];
 
 export const addUser = ({ id, name, room }: User) => {
-  name = name.trim().toLowerCase();
-  room = room.trim().toLowerCase();
+  name = name.trim();
+  room = room.trim();
 
   const existingUser = users.find(
     (user) => user.room === room && user.name === name
@@ -47,7 +47,7 @@ export const getUser = (id: string) => {
 };
 
 export const getUsersInRoom = (room: string) => {
-  room = room.trim().toLowerCase();
+  room = room.trim();
   const usersInRoom = users.filter((user) => user.room === room);
   console.log(`Getting users in room ${room}: ${JSON.stringify(usersInRoom)}`);
   return usersInRoom;
