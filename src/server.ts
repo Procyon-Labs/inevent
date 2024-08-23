@@ -22,7 +22,7 @@ const checkServerHealth = () => {
       console.error(`Error checking server health:`, error.message);
     });
 };
-const interval = 2 * 60 * 1000;
+const interval = 8 * 60 * 1000;
 setInterval(checkServerHealth, interval);
 
 checkServerHealth();
