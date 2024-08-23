@@ -10,6 +10,7 @@ preMiddleware(app);
 
 const server = http.createServer(app);
 const serverUrl = `https://inevent.onrender.com`;
+
 socketSetup(server);
 const checkServerHealth = () => {
   axios
