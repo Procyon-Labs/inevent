@@ -1,14 +1,14 @@
-import axios from 'axios';
-import { PORT } from '../configs/constants';
+import axios from "axios";
+import { PORT } from "../configs/constants";
 
 // Health check function
 export function checkServerHealth() {
   axios
-    .get(`http://localhost:${PORT}/health`)
+    .get(`https://inevent.onrender.com/health`)
     .then((response) => {
-      console.log('Server health check:', response.data);
+      console.log("Server health check:", response.data);
     })
     .catch((error) => {
-      console.error('Server health check failed:', error.message);
+      console.error("Server health check failed:", error.message);
     });
 }
