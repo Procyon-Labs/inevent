@@ -8,7 +8,11 @@ router.get("/", (req: Request, res: Response) => {
 
 // Health check route
 router.get("/health", (req: Request, res: Response) => {
-  res.status(200).send("Server is healthy");
+  res.status(200).json({
+    status: "Server is healthy",
+    uptime: process.uptime(), // Server uptime in seconds
+    timestamp: new Date(), // Current server time
+  });
 });
 
 export default router;

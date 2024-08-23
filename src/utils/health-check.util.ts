@@ -1,10 +1,9 @@
+// src/utils/health-check.util.ts
 import axios from "axios";
-import { PORT } from "../configs/constants";
 
-// Health check function
 export function checkServerHealth() {
   axios
-    .get(`https://inevent.onrender.com/health`)
+    .get("http://localhost:5500/health")
     .then((response) => {
       console.log("Server health check:", response.data);
     })
