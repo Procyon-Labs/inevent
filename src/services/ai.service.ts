@@ -22,7 +22,7 @@ export async function getRandomSponsorAd(): Promise<string | boolean> {
       sentAds.push(ad[0]._id);
       
       // return ad[0];
-      return `${ad[0].title}\n${ad[0].description}`;
+      return `${ad[0].title} - ${ad[0].description}`;
     }
 
     // If no ad is found, reset the sentAds array and loop again
