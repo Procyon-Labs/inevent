@@ -1,14 +1,13 @@
-import axios from 'axios';
-import { PORT } from '../configs/constants';
+// src/utils/health-check.util.ts
+import axios from "axios";
 
-// Health check function
 export function checkServerHealth() {
   axios
-    .get(`http://localhost:${PORT}/health`)
+    .get("http://localhost:5500/health")
     .then((response) => {
-      console.log('Server health check:', response.data);
+      console.log("Server health check:", response.data);
     })
     .catch((error) => {
-      console.error('Server health check failed:', error.message);
+      console.error("Server health check failed:", error.message);
     });
 }
