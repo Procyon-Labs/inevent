@@ -2,6 +2,8 @@ import { Message } from '../interfaces/messages.interface';
 import { getUser, addUser, removeUser, getUsersInRoom } from '../services/user';
 import { Server as SocketIOServer } from 'socket.io';
 import { generateResponse } from './ai.config';
+import { getRandomSponsorAd } from '../services';
+let allRooms: Set<any> = new Set(); //Rooms to broadcast sponsorship ads to
 
 export function socketSetup(server: any) {
   const messages: { [room: string]: Message[] } = {};
@@ -17,6 +19,7 @@ export function socketSetup(server: any) {
     console.log('a user connected');
 
     socket.on('join', ({ name, room }, callback) => {
+      allRooms.add(room);
       const { error, user } = addUser({ id: socket.id, name, room });
       if (error) return callback?.(error);
 
@@ -122,4 +125,25 @@ export function socketSetup(server: any) {
       console.log('user disconnected');
     });
   });
+
+  //Send ads to all rooms at intervals
+  setInterval(async () => {
+    console.log('Sending sponsorship ad to', allRooms);
+    if (allRooms.size) {
+      const messageId = `${Date.now()}`;
+      const sponsorshipAd = await getRandomSponsorAd();
+
+      if (sponsorshipAd) {
+        // Emit a new message to all clients in the room
+        allRooms.forEach((room) => {
+          io.to(room).emit('message', {
+            id: messageId,
+            user: 'emBot',
+            text: sponsorshipAd,
+            reactions: [],
+          });
+        });
+      }
+    }
+  }, 1000 * 60 * 2); //2 Minutes
 }

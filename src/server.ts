@@ -1,9 +1,11 @@
-import express from "express";
-import http from "http";
+import express from 'express';
+import http from 'http';
+import { preMiddleware } from './middleware/pre.middleware';
+import { socketSetup } from './configs/socket.config';
+import { PORT } from './configs/constants';
+import connectToMongo from './configs/database.configs';
+
 import axios from "axios";
-import { preMiddleware } from "./middleware/pre.middleware";
-import { socketSetup } from "./configs/socket.config";
-import { PORT } from "./configs/constants";
 
 const app = express();
 preMiddleware(app);
@@ -27,6 +29,7 @@ setInterval(checkServerHealth, interval);
 
 checkServerHealth();
 
-server.listen(PORT, () => {
+server.listen(PORT, async () => {
+  await connectToMongo();
   console.log(`Server is running on port ${PORT}`);
 });
